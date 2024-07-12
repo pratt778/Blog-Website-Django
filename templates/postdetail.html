@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{% endblock title %}
+{% block content %}
+<main class="h-100 p-3">
+    <h1>{{post.Title | capfirst}}</h1>
+    <p>
+        <small>
+            by {{post.Author}} , {{post.Date}}
+        </small>
+    </p>
+    <img src="{{post.Image.url}}" class="w-75 border " alt="{{post.Title}}">
+   <p class="mt-4">
+    {{post.Content | capfirst}}
+   </p>
+</main>
+{% endblock content %}

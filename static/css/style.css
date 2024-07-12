@@ -1,0 +1,13 @@
+.blogcard{
+    width: 32% !important;
+    height: max-content !important;
+}
+.blogcard img{
+    width: 100%;
+    height: 300px !important;
+    height: auto;
+   
+}
+.row>*{
+    padding: 0 !important;
+}
