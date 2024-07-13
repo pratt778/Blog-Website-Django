@@ -9,10 +9,21 @@ class home(ListView):
     ordering=["-Date"]
     context_object_name='post'
     template_name='index.html'
+
+    def get_queryset(self):
+        query= super().get_queryset()
+        data=query[:2]
+        return data
+    
    
     
-def posts():
-    pass
+class posts(ListView):
+    model=Post
+    ordering=['-Date']
+    context_object_name='post'
+    template_name='allpost.html'
+
+
 class postdetail(DetailView):
     template_name='postdetail.html'
     model=Post

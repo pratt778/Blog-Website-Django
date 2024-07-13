@@ -1,0 +1,18 @@
+<div class="blogcard col-md-4 shadow-lg rounded">
+    <img src="{{post.Image.url}}"
+    class="post_img"  alt="{{post.Title}}">
+    <div class="card-body p-2">
+        <p class="text-center">
+            <small>{{post.Date}} by {{post.Author | capfirst}}</small>
+        </p>
+        <h4 class="text-center">{{post.Title | capfirst}}</h4>
+        
+        <p>
+            {{post.Token | capfirst}}
+        </p>
+        
+    </div>
+    <div class="card-footer text-center p-2 ">
+        <a href="{% url "postdetails" post.Slug %}">Readmore</a>
+    </div>
+</div>

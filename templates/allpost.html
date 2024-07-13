@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Home | Blog Website{% endblock title %}
+{% block title %}All posts | Blog Website{% endblock title %}
 {% block csslink %}
     <link rel="stylesheet" href="/static/css/style.css">
     {% endblock csslink %}
 {% block content %}
 <main class="h-100 p-3">
-    <h1 class="text-warning">Home</h1>
+    <h1 class="text-warning">All Posts</h1>
     <div class="all_posts">
         <div class="row gap-3">
             {% for post in post %}

@@ -5,12 +5,12 @@
     <h1>{{post.Title | capfirst}}</h1>
     <p>
         <small>
-            by {{post.Author}} , {{post.Date}}
+            Update by {{post.Author}} , {{post.Date | date:'d M Y'}}
         </small>
     </p>
     <img src="{{post.Image.url}}" class="w-75 border " alt="{{post.Title}}">
    <p class="mt-4">
-    {{post.Content | capfirst}}
+    {{post.Content | capfirst| linebreaks}}
    </p>
 </main>
 {% endblock content %}
