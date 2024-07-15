@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Home | Blog Website{% endblock title %}
+{% block csslink %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+    {% endblock csslink %}
+{% block content %}
+<main class="p-3">
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Update A Post</legend>
+            {{form|crispy}}
+            <button class="btn btn-success" type="submit">Submit Post</button>
+
+        </fieldset>
+    </form>
+    <div class="mt-4">
+        <small>Do you want to go back? <a href="{% url "posts" %}">All Posts</a></small>
+    </div>
+</main>
+
+{% endblock content %}

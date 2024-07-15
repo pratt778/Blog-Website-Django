@@ -8,9 +8,20 @@
             Update by {{post.Author}} , {{post.Date | date:'d M Y'}}
         </small>
     </p>
+    {% if user.is_authenticated %}
+   
+   {% if user.id == post.Author.id %}
+   <div class="my-4">
+    <button class="btn btn-primary"><a href="{% url "updatepost" post.Slug %}" class="text-white">Update</a></button>
+    <button class="btn btn-danger"><a href="{% url "deletepost" post.Slug %}" class="text-white">Delete<a/></button>
+   </div>
+   
+   {% endif %}
+   {% endif %}
     <img src="{{post.Image.url}}" class="w-75 border " alt="{{post.Title}}">
    <p class="mt-4">
     {{post.Content | capfirst| linebreaks}}
    </p>
+   
 </main>
 {% endblock content %}

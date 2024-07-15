@@ -22,24 +22,35 @@
             <li class="nav-item active">
               <a class="nav-link" href="{% url "home" %}">Home</a>
             </li>
+           
+           
             <li class="nav-item">
-              <a class="nav-link" href="#">Create Post</a>
+              <a class="nav-link" href="#">Contact Form</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url "posts" %}">All Post</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
+            
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "createpost" %}">Create Post</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
+                <a class="nav-link" href="{% url "posts" %}">All Post</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Register</a>
+                <form action="{% url "logout" %}" method="post">
+                  {% csrf_token %}
+                  <button class="btn btn-danger" type="submit">Logout</button>
+                </form>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "login" %}">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Contact Form</a>
+                <a class="nav-link" href="{% url "signup" %}">Register</a>
               </li>
+              {% endif %}
+             
+             
            
           </ul>
         </div>
