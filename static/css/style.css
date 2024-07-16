@@ -8,6 +8,9 @@
     height: auto;
    
 }
+li{
+    list-style: none;
+}
 .row>*{
     padding: 0 !important;
 }

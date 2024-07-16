@@ -10,4 +10,11 @@ class Post(models.Model):
     Image = models.ImageField(upload_to="Imgs",null=True)
     Author = models.ForeignKey(User,on_delete=models.CASCADE)
     Date = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.Title
     
+class Comments(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    text = models.TextField(max_length=200)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)

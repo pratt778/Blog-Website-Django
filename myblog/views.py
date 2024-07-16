@@ -4,9 +4,13 @@ from django.shortcuts import render
 from .models import Post
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from .forms import RegisterForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.utils.text import slugify
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
+from .forms import CommentForm
+from .models import Comments
+from django.http import HttpResponseRedirect
+
 # Create your views here.
 class home(ListView):
     model=Post
@@ -21,25 +25,47 @@ class home(ListView):
     
    
     
-class posts(ListView):
+class posts(LoginRequiredMixin,ListView):
     model=Post
     ordering=['-Date']
     context_object_name='post'
     template_name='allpost.html'
 
 
-class postdetail(DetailView):
-    template_name='postdetail.html'
-    model=Post
-    slug_field = 'Slug'
-    context_object_name="post"
+class postdetail(LoginRequiredMixin,DetailView):
+    data={}
+    def get(self,request,slug):
+        mypost = Post.objects.get(Slug=slug)
+        data={
+            'post':mypost,
+            'comments':CommentForm(),
+            'allcomments':Comments.objects.filter(post=mypost).order_by('-id')
+        }
+        return render(request,'postdetail.html',data)
+    def post(self,request,slug):
+        mypost = Post.objects.get(Slug=slug)
+        mycomment = CommentForm(request.POST)
+        if mycomment.is_valid():
+            com = mycomment.save(commit=False)
+            com.user = request.user
+            com.post=mypost
+            com.save()
+            return HttpResponseRedirect(reverse('postdetails',args=[slug]))
+
+        else:
+            data={
+                'post':mypost,
+                'comments':CommentForm()
+            }
+            return render(request,'postdetail.html',data)
+
 
 class Signup(CreateView):
     form_class = RegisterForm
     success_url=reverse_lazy('login')
     template_name='register.html'
 
-class createPost(CreateView):
+class createPost(LoginRequiredMixin,CreateView):
     model=Post
     template_name='createpost.html'
     fields=['Title','Token','Content','Image']
@@ -49,7 +75,7 @@ class createPost(CreateView):
         form.instance.Slug=slugify(form.instance.Title)
         return super().form_valid(form)
     
-class updatePost(UpdateView,UserPassesTestMixin):
+class updatePost(LoginRequiredMixin,UpdateView,UserPassesTestMixin):
     model=Post
     template_name='updatepost.html'
     success_url=reverse_lazy('posts')
@@ -62,7 +88,7 @@ class updatePost(UpdateView,UserPassesTestMixin):
             return True
         else:return False
 
-class deletePost(DeleteView,UserPassesTestMixin):
+class deletePost(LoginRequiredMixin,DeleteView,UserPassesTestMixin):
     template_name="post_confirm_delete.html"
     model=Post
     success_url=reverse_lazy('posts')

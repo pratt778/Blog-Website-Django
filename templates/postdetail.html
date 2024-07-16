@@ -22,6 +22,22 @@
    <p class="mt-4">
     {{post.Content | capfirst| linebreaks}}
    </p>
-   
+   <div>
+    <h4>Comment your thoughts here:</h4>
+   </div>
+   <form action="{% url "postdetails" post.Slug %}" method="post">
+    {% csrf_token %}
+    <h5 class="text-warning">{{request.user}}</h5>
+    {{comments}}
+    <button type="submit" class="btn btn-success">Comment</button>
+   </form>
+   <section>
+    {% for com in allcomments %}
+    <ul>
+        <li>{{com.user.username}}</li>
+        <li>{{com.text}}</li>
+    </ul>
+    {% endfor %}
+   </section>
 </main>
 {% endblock content %}
