@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import Textarea
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 # Create your models here.
@@ -18,3 +19,4 @@ class Comments(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     text = models.TextField(max_length=200)
     post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    
